@@ -1,0 +1,5 @@
+[core]
+  editor = vim
+[user]
+  name = Hans Peschke
+  email = SEP@guug.de

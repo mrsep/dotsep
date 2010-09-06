@@ -1,0 +1,7 @@
+                    , Run MultiCpu "mcpu"
+                    , Run TopProc 
+font = "-*-Fixed-R-Normal-*-8-*-*-*-*-*-*-*"
+font = "xft:Times New Roman-10:italic"		    
+, Run Wireless "wlan0" [] 20
+
+Battery: <status>
