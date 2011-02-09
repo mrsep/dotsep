@@ -100,6 +100,7 @@ fi
 
 . /home/sep/etc/intel.sh
 . /home/sep/etc/env.sh
+export EDITOR=vim
 export PATH=$PATH:/data/ws/main/cari/bin/
 export PATH=$PATH:/home/sep/usr/flex/bin/
 PXSC_SYS=/usr/local/p-xsc/sys/; export PXSC_SYS

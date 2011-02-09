@@ -8,6 +8,46 @@
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
+;; Tabbar-Mode
+(require 'tabbar)
+(tabbar-mode)
+
+;; Org-Mode
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
+;; Erlang-Mode
+(setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.5/emacs" load-path))
+(setq erlang-root-dir "/usr/lib/erlang")
+(setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
+(require 'erlang-start)
+
+
+
+;; Auctex
+(load "auctex.el" nil t t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-PDF-mode t)
+(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+(add-hook 'LaTeX-mode-hook 'turn-on-font-lock)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(setq reftex-plug-into-AUCTeX t)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; Satzende ". " statt ". ". " f ̈r M-k: l ̈schen bis Satzende usw.
+(setq sentence-end "[.?!][]\"’)}]*\\($\\| \\| \\)[
+;;]*") ;; Da ist ein "Newline in der Zeile!"
+(setq sentence-end-double-space nil)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(load "preview-latex.el" nil t t)
+(setq-default ispell-program-name "aspell")
+(add-hook 'TeX-language-de-hook
+  (function (lambda () (ispell-change-dictionary "german8"))))
+
+
 ;; SLIME
 (require 'slime)
 (require 'slime-autoloads)
@@ -49,3 +89,12 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 81 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(menu-bar-mode t)
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t))
