@@ -95,6 +95,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(menu-bar-mode t)
+ '(menu-bar-mode nil)
  '(scroll-bar-mode nil)
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
