@@ -19,6 +19,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Named
 import XMonad.Layout.StackTile
 import XMonad.Layout.Roledex
+import XMonad.Layout.ToggleLayouts
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 -- import XMonad.Prompt.Man
@@ -47,7 +48,7 @@ main = do
         } `additionalKeys` myKeys
 
 
-myLayoutHook = avoidStruts $ smartBorders (
+myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
         named "Tall" tiled 
     ||| named "Mirror Tall" (Mirror tiled)
     ||| Full
@@ -94,7 +95,9 @@ myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((modm .|. shiftMask, xK_Up),    shiftNextScreen)
          , ((modm .|. shiftMask, xK_Down),  shiftPrevScreen)
          , ((modm,               xK_z),     toggleWS)
---          , ((modm,               xK_f),     "fullscreen") ???
+         , ((modm .|. shiftMask, xK_l),     spawn "gnome-screensaver-command -l")
+         , ((modm,               xK_f),     sendMessage ToggleLayout)
+
          --, ((modm,               xK_F1),    manPrompt defaultXPConfig)
          , ((modm,               xK_F2),    shellPrompt defaultXPConfig)
          --, ((modm,               xK_F3),    sshPrompt defaultXPConfig)
