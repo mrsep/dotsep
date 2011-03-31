@@ -99,3 +99,7 @@
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
+
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-charcoal-black)

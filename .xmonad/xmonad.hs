@@ -62,16 +62,15 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     )
   where
     tiled   = Tall 1 delta ratio
-    ratio   = toRational (2/(1+sqrt(5)::Double))
+    ratio   = 0.5
     delta   = 0.01
 
 
-myWorkspaces = ["1:mail", "2:web", "3:java", "4:docs", "5:uni", "6:gsc-gsp", "7:media", "8", "9:config"]
+myWorkspaces = ["1:mail", "2:web", "3:joop", "4:gp", "5:uni", "6:gsc-gsp", "7:media", "8", "9:config"]
 
 myManageHook = composeAll [ isFullscreen --> doF W.focusDown <+> doFullFloat
                           , className =? "Thunderbird"     --> doShift "1:mail"
                           , className =? "Firefox"         --> doShift "2:web"
-                          , className =? "Chrome"          --> doShift "7:media"
                           , className =? "Video"           --> doShift "7:media"
                           , title     =? "rhythmbox"       --> doShift "7:media"
                           , className =? "Gimp"            --> doFloat
@@ -84,8 +83,8 @@ myLogHook h = dynamicLogWithPP $ xmobarPP
                                  , ppSep = " <fc=#3d3d07>|</fc> "
                                  }
 
-myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
-         , ((0, xK_Print), spawn "scrot")
+myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot")
+         , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((modm,               xK_Right), nextWS)
          , ((modm,               xK_Left),  prevWS)
          , ((modm .|. shiftMask, xK_Right), shiftToNext)
@@ -97,7 +96,6 @@ myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((modm,               xK_z),     toggleWS)
          , ((modm .|. shiftMask, xK_l),     spawn "gnome-screensaver-command -l")
          , ((modm,               xK_f),     sendMessage ToggleLayout)
-
          --, ((modm,               xK_F1),    manPrompt defaultXPConfig)
          , ((modm,               xK_F2),    shellPrompt defaultXPConfig)
          --, ((modm,               xK_F3),    sshPrompt defaultXPConfig)
