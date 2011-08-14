@@ -66,7 +66,7 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     delta   = 0.01
 
 
-myWorkspaces = ["1:mail", "2:web", "3:joop", "4:gp", "5:uni", "6:gsc-gsp", "7:media", "8", "9:config"]
+myWorkspaces = ["1:mail", "2:web", "3:doc", "4:mpi", "5:jsc-gsp", "6:tex", "7:media", "8", "9:config"]
 
 myManageHook = composeAll [ isFullscreen --> doF W.focusDown <+> doFullFloat
                           , className =? "Thunderbird"     --> doShift "1:mail"
