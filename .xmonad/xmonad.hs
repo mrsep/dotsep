@@ -37,7 +37,7 @@ main = do
     xmonad $ defaultConfig
 
         { manageHook  = myManageHook <+> manageDocks
-        , terminal    = "gnome-terminal"
+        , terminal    = "urxvtc +sb"
         , focusedBorderColor = "#5d0017"
         , normalBorderColor  = "#1e1c10"
         , workspaces  = myWorkspaces
@@ -66,7 +66,7 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     delta   = 0.01
 
 
-myWorkspaces = ["1:mail", "2:web", "3:doc", "4:mpi", "5:jsc-gsp", "6:tex", "7:media", "8", "9:config"]
+myWorkspaces = ["1:mail", "2:web", "3:doc", "4:clojure", "5:clomath", "6:ai", "7:media", "8:pepc", "9:config"]
 
 myManageHook = composeAll [ isFullscreen --> doF W.focusDown <+> doFullFloat
                           , className =? "Thunderbird"     --> doShift "1:mail"

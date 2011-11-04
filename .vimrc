@@ -21,7 +21,11 @@ set icon
 set scrolloff=5
 set showmode
 set sidescroll=5
+set nowrap
 syntax on
+
+set background=dark
+colorscheme solarized
 
 
 set nocompatible

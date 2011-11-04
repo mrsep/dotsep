@@ -1,7 +1,6 @@
 #!/bin/bash
  
 # Load resources
- 
 xrdb -merge .Xresources
 
 # Disable PC-Speaker
@@ -11,22 +10,26 @@ xkbevd -bg
 
 # Set up an icon tray
  
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 10 --tint black --heighttype pixel --height 19 --transparent true --alpha 0 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 15 --tint black --heighttype pixel --height 19 --transparent true --alpha 0 &
 
-# Set background 
- 
-# xsetroot -solid midnightblue &
+# Set background
+#xsetroot -solid midnightblue &
 xsetroot -bitmap Bilder/THINK-I.jpg
- 
+
+urxvtd -o -f -q
+
+# ssh-agent stuff
+eval $(ssh-agent -c)
+
 # Fire up apps
 gnome-settings-daemon &
 update-notifier &
-bluetooth-applet &
 system-config-printer-applet &
 nm-applet --sm-disable &
-gnome-power-manager &
-gnome-volume-control-applet &
+#gnome-power-manager &
+gnome-sound-applet &
+bluetooth-applet &
 
 xscreensaver -no-splash &
 
-exec xmonad
+exec /usr/local/bin/xmonad
