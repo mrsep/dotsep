@@ -74,6 +74,13 @@
 (add-hook 'TeX-language-de-hook
   (function (lambda () (ispell-change-dictionary "german8"))))
 
+(defun TeX-toggle-escape nil (interactive) 
+  (setq LaTeX-command 
+        (if (string= LaTeX-command "latex") "latex -shell-escape" "latex"))) 
+
+(add-hook 'LaTeX-mode-hook 
+          '(lambda () 
+             (define-key LaTeX-mode-map "\C-c\C-t\C-x" 'TeX-toggle-escape)))
 
 ;; SLIME
 (eval-after-load "slime"
@@ -112,6 +119,7 @@
 ; This is the binary name of my scheme implementation
 (setq scheme-program-name "scm")
 
+
 ; WWW: w3m-el-snapshot
 
 
@@ -125,15 +133,20 @@
  '(column-number-mode t)
  '(custom-enabled-themes nil)
  '(menu-bar-mode nil)
+ '(quack-newline-behavior (quote indent-newline-indent))
+ '(quack-pretty-lambda-p t)
+ '(quack-smart-open-paren-p t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
+
 (require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (require 'color-theme-solarized)
-     (color-theme-solarized-dark)))
-
-
+(setq color-theme-is-global t)
+(color-theme-solarized-dark)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
