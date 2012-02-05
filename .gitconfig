@@ -2,7 +2,7 @@
   editor = vim
 [user]
   name = Hans Peschke
-  email = SEP@guug.de
+  email = sep@guug.de
 
 [color]
         diff = auto
