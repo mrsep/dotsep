@@ -1,11 +1,7 @@
+;;; Emacs Configuration of Hans Peschke, aka sep
+;;;
 
-(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-solarized-1.0.0")
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
+;; package.el
 (when
     (load
      (expand-file-name "~/.emacs.d/elpa/package.el"))
@@ -20,20 +16,12 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 
-;; Tabbar-Mode
-;(require 'tabbar)
-;(tabbar-mode)
-
 ;; Org-Mode
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
-
-
-;; Git Mode Magit
-(autoload 'magit-status "magit" nil t)
 
 
 ;; paredit
@@ -43,14 +31,14 @@
 (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
 (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-(add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'slime-repl-mode-hook       (lambda () (paredit-mode +1)))
+
 
 ;; Erlang-Mode
 (setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.5/emacs" load-path))
 (setq erlang-root-dir "/usr/lib/erlang")
 (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
 (require 'erlang-start)
-
 
 
 ;; Auctex
@@ -82,21 +70,36 @@
           '(lambda () 
              (define-key LaTeX-mode-map "\C-c\C-t\C-x" 'TeX-toggle-escape)))
 
+
+
 ;; SLIME
+;; use the latest version of slime:
+;; either: git clone git://github.com/nablaone/slime.git to ~/.emacs.d/
+;; or: git pull in ~/.emacs.d/
+
+(add-to-list 'load-path "~/.emacs.d/slime")
 (eval-after-load "slime"
-  '(progn 
-     (slime-setup '(slime-repl))	
+  '(progn
+     (add-to-list 'load-path "~/.emacs.d/slime/contrib")
+     (add-to-list 'slime-lisp-implementations '(sbcl ("sbcl")))
+     (setq inferior-lisp-program "sbcl"
+           slime-protocol-version 'ignore
+           slime-net-coding-system 'utf-8-unix
+	   ;; lisp-indent-function 'common-lisp-indent-function
+	   slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+	   slime-complete-symbol*-fancy t
+	   slime-startup-animation t)
+     ;; common-lisp-hyperspec-root ""
+     (set-language-environment "UTF-8")
+     (slime-setup '(slime-repl slime-banner slime-fuzzy))
      (defun paredit-mode-enable () (paredit-mode 1))	
      (add-hook 'slime-mode-hook 'paredit-mode-enable)	
      (add-hook 'slime-repl-mode-hook 'paredit-mode-enable)
-     (setq slime-protocol-version 'ignore)))
+     (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+     (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))))
 (require 'slime)
 (require 'slime-autoloads)
-;(require 'swank-clojure)
 
-
-;; Adding sbcl to slime
-;(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl")))
 
 ;; Haskell-Hugs
 (add-hook 'haskell-mode-hook 'turn-on-haskell-hugs)
@@ -105,6 +108,7 @@
 
 (setq auto-mode-alist (append auto-mode-alist
                         '(("\\.hs$" . hugs-mode))))
+
 
 ;; Scheme: quack
 (require 'quack)
@@ -120,10 +124,23 @@
 (setq scheme-program-name "scm")
 
 
-; WWW: w3m-el-snapshot
+;; IDO-Mode
+(require 'ido)
+(setq ido-create-new-buffer 'always)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; Smex
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 
-; custom emacs setup
+;; custom emacs setup
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -132,6 +149,7 @@
  '(ansi-color-names-vector ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
  '(column-number-mode t)
  '(custom-enabled-themes nil)
+ '(ido-mode (quote both) nil (ido))
  '(menu-bar-mode nil)
  '(quack-newline-behavior (quote indent-newline-indent))
  '(quack-pretty-lambda-p t)
@@ -140,6 +158,8 @@
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 
+
+(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-solarized-1.0.0")
 
 (require 'color-theme)
 (setq color-theme-is-global t)
