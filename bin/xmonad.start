@@ -23,7 +23,7 @@ eval $(ssh-agent -c)
 
 # Fire up apps
 gnome-settings-daemon &
-update-notifier &
+#update-notifier &
 system-config-printer-applet &
 nm-applet --sm-disable &
 #gnome-power-manager &
@@ -32,4 +32,5 @@ bluetooth-applet &
 
 xscreensaver -no-splash &
 
+#exec ./cabal/bin/xmonad
 exec xmonad
