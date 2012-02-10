@@ -2,7 +2,7 @@
 -- 
 -- installation hints:
 -- - dependencies: curl for Weather plugin
--- - cabal install with the option with_xft for xft fonts
+-- - cabal install xmobar --flags="with_xft with_utf8"
 --
 
 Config { font = "xft:Times New Roman-10"
@@ -11,16 +11,23 @@ Config { font = "xft:Times New Roman-10"
        , position = TopW L 100
        , lowerOnStart = True
        , commands = [ 
-                      Run Network "eth0"  ["-t","net: <rx> / <tx>" ,"-L"," 0","-H","32","--normal","green","--high","red"] 20
---                      Run Network "wlan0" ["-t","wlan: <rx> / <tx>","-L"," 0","-H","32","--normal","green","--high","red"] 20
+--                      Run Network "eth0"  ["-t","net: <rx> / <tx>" ,"-L"," 0","-H","32","--normal","green","--high","red"] 20
+                      Run Network "wlan1" ["-t","wlan: <rx> / <tx>","-L"," 0","-H","32","--normal","green","--high","red"] 20
                     , Run Cpu             ["-t","CPU: <total>% "   ,"-L","10","-H","50","--low","green","--normal","yellow","--high","red"] 20
-            		    , Run ThermalZone 0   ["-t","<temp>°C"          ,"-L","30","-H","45","--low","green","--normal","yellow","--high","red"] 30
+                    , Run ThermalZone 0   ["-t","<temp>°C"         ,"-L","30","-H","45","--low","green","--normal","yellow","--high","red"] 30
                     , Run Memory          ["-t","Mem: <usedratio>%","-L","30","-H","70","--low","green","--normal","yellow","--high","red"] 20
+                    , Run Battery         ["-t", "AC <acstatus><watts> (<left>%)",
+                                           "-L", "10", "-H", "80", "-p", "3",
+                                           "--", "-O", "<fc=green>On</fc> ",
+                                                 "-o", "<fc=red>Off</fc> ",
+                                           "-L", "-15", "-H", "-5",
+                                           "-l", "red", "-m", "yellow", "-h", "green", --"-p", "blue",
+                                           "-c", "energy_full"] 50
                     , Run Date "%d. %B %R" "date" 300
                     , Run Weather "EDDC"  ["-t","<tempC>°C","-L","15","-H","27","--normal","yellow","--high","red","--low","lightblue"] 6000
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% @ %thermal0% | %memory% | %eth0% | <fc=lightblue>%date%</fc> @ %EDDC% "
+       , template = "%StdinReader% }{ %cpu% @ %thermal0% | %memory% | %wlan1% | %battery% | <fc=lightblue>%date%</fc> @ %EDDC% "
        }
