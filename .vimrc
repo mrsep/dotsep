@@ -11,6 +11,7 @@ set smartindent
 set number
 set shiftwidth=2
 set tabstop=2
+set splitright
 set softtabstop=2
 set shiftround
 set smarttab
