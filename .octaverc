@@ -1,0 +1,17 @@
+# Matlab like Prompt
+PS1(">> ")
+
+# add gaio to the path
+addpath /home/sep/usr/gaio3/
+addpath /home/sep/usr/gaio3/matlab
+
+# Octave working directory
+cd ~/ws
+
+# Clear the startup screen
+clc;
+
+# Use vim as editor
+edit mode sync
+edit home .
+EDITOR('vim > /dev/tty 2>&1 < /dev/tty %s')

@@ -24,13 +24,14 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell
 -- import XMonad.Prompt.Man
 -- import XMonad.Prompt.Ssh
-
+import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 
 
 modm = mod4Mask
+ctrm = controlMask
 
 main = do
     xmproc <- spawnPipe "xmobar"
@@ -66,25 +67,25 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     delta   = 0.01
 
 
-myWorkspaces = ["1:mail", "2:web", "3:doc", "4:clojure", "5:clomath", "6:ai", "7:media", "8:pepc", "9:config"]
+myWorkspaces = ["1:sys", "2:web", "3:octave", "4:gaio", "5:latex", "6:", "7:", "8:", "9:sys"]
 
 myManageHook = composeAll [ isFullscreen --> doF W.focusDown <+> doFullFloat
-                          , className =? "Thunderbird"     --> doShift "1:mail"
+                          , className =? "Thunderbird"     --> doShift "1:apt"
                           , className =? "Firefox"         --> doShift "2:web"
-                          , className =? "Video"           --> doShift "7:media"
-                          , title     =? "rhythmbox"       --> doShift "7:media"
                           , className =? "Gimp"            --> doFloat
                           ]
 
 myLogHook h = dynamicLogWithPP $ xmobarPP
-                                 { ppOutput = hPutStrLn h
-                                 , ppTitle = xmobarColor "#cdcd57" "" . shorten 150
+                                 { ppOutput  = hPutStrLn h
+                                 , ppTitle   = xmobarColor "#cdcd57" "" . shorten 150
                                  , ppCurrent = xmobarColor "#cdcd57" "" -- . wrap "[" "]"
-                                 , ppSep = " <fc=#3d3d07>|</fc> "
+                                 , ppSep     = " <fc=#3d3d07>|</fc> "
                                  }
 
-myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot")
-         , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s")
+myKeys = [ ((ctrm,               xK_Print), spawn "sleep 0.2; scrot")
+         , ((ctrm .|. shiftMask, xK_Print), spawn "sleep 0.2; scrot -s")
+      -- , ((modm,               xK_p),     spawn "dmenu")
+      -- , ((modm .|. shiftMask, xK_p),     spawn "gmrun")
          , ((modm,               xK_Right), nextWS)
          , ((modm,               xK_Left),  prevWS)
          , ((modm .|. shiftMask, xK_Right), shiftToNext)
@@ -94,10 +95,13 @@ myKeys = [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot")
          , ((modm .|. shiftMask, xK_Up),    shiftNextScreen)
          , ((modm .|. shiftMask, xK_Down),  shiftPrevScreen)
          , ((modm,               xK_z),     toggleWS)
-         , ((modm .|. shiftMask, xK_l),     spawn "gnome-screensaver-command -l")
+         , ((modm .|. shiftMask, xK_l),     spawn "light-locker-command -l")
          , ((modm,               xK_f),     sendMessage ToggleLayout)
-         --, ((modm,               xK_F1),    manPrompt defaultXPConfig)
+       --, ((modm,               xK_F1),    manPrompt defaultXPConfig)
          , ((modm,               xK_F2),    shellPrompt defaultXPConfig)
-         --, ((modm,               xK_F3),    sshPrompt defaultXPConfig)
+       --, ((modm,               xK_F3),    sshPrompt defaultXPConfig)
+         , ((0, xF86XK_AudioLowerVolume),   spawn "amixer set Master 2-")
+         , ((0, xF86XK_AudioRaiseVolume),   spawn "amixer set Master 2+")
+         , ((0, xF86XK_AudioMute       ),   spawn "amixer set Master toggle")
          ]
 

@@ -21,5 +21,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/usr/bin:$HOME/.cabal/bin:$HOME/bin:$PATH"
 fi
 
+export GAIODIR=/home/sep/usr/gaio
+
 eval `dircolors $HOME/.dircolors`
 

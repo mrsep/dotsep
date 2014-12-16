@@ -4,7 +4,6 @@ set incsearch
 set hlsearch
 set infercase
 set nojoinspaces
-set mouse=a
 set autoindent
 set copyindent
 set smartindent
@@ -23,14 +22,20 @@ set scrolloff=5
 set showmode
 set sidescroll=5
 set nowrap
-syntax on
-
-set background=dark
-colorscheme solarized
-
+set cursorline
 
 set nocompatible
-filetype plugin indent on
 syntax on
+set background=dark
+colorscheme solarized
+filetype plugin indent on
+
 let clj_highlight_builtins = 1
 
+" .m files are "octave" files
+augroup filetypedetect
+  au! BufRead,BufNewFile *.m, set filetype=octave
+augroup END
+
+" F5 executes the octave script you are editing
+autocmd FileType octave map <buffer> <f5> ggOpkg load all<esc>Gopause<esc>:w<cr>:!octave -qf %<cr>ddggdd:w<cr>
