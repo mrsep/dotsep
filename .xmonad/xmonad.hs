@@ -67,7 +67,7 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     delta   = 0.01
 
 
-myWorkspaces = ["1:sys", "2:web", "3:octave", "4:gaio", "5:latex", "6:", "7:", "8:", "9:sys"]
+myWorkspaces = ["1:sys", "2:web", "3:octave", "4:paper", "5:latex", "6:pdf", "7:overview", "8:", "9:sys"]
 
 myManageHook = composeAll [ isFullscreen --> doF W.focusDown <+> doFullFloat
                           , className =? "Thunderbird"     --> doShift "1:apt"
@@ -102,6 +102,6 @@ myKeys = [ ((ctrm,               xK_Print), spawn "sleep 0.2; scrot")
        --, ((modm,               xK_F3),    sshPrompt defaultXPConfig)
          , ((0, xF86XK_AudioLowerVolume),   spawn "amixer set Master 2-")
          , ((0, xF86XK_AudioRaiseVolume),   spawn "amixer set Master 2+")
-         , ((0, xF86XK_AudioMute       ),   spawn "amixer set Master toggle")
+         , ((0, xF86XK_AudioMute       ),   spawn "amixer -D pulse set Master 1+ toggle")
          ]
 
