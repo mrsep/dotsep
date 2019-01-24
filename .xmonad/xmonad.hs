@@ -10,6 +10,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.CycleWS
 -- import XMonad.Actions.DynamicWorkspaces
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
 import XMonad.Layout.Circle
@@ -49,7 +50,7 @@ main = do
         } `additionalKeys` myKeys
 
 
-myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
+myLayoutHook = avoidStruts $ toggleLayouts Full $ smartBorders (
         named "Tall" tiled 
     ||| named "Mirror Tall" (Mirror tiled)
     ||| Full
@@ -65,7 +66,6 @@ myLayoutHook = avoidStruts $ toggleLayouts Full $smartBorders (
     tiled   = Tall 1 delta ratio
     ratio   = 0.5
     delta   = 0.01
-
 
 myWorkspaces = ["1:sys", "2:web", "3:octave", "4:paper", "5:latex", "6:pdf", "7:overview", "8:", "9:sys"]
 
